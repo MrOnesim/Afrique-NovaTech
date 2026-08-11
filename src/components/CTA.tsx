@@ -14,7 +14,7 @@ export default function CTA() {
         <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
         <div className="relative px-8 py-20 text-center sm:py-28">
           <h2 className="mx-auto max-w-3xl text-4xl font-black leading-tight tracking-tight sm:text-6xl">
-            Prêt à <span className="text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.18)]">transformer</span> votre vision en réalité&nbsp;?
+            Prêt à <span className="shine-text [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]">transformer</span> votre vision en réalité&nbsp;?
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-white/70">
             Rejoignez les entreprises qui font confiance à notre équipe pour bâtir leur présence digitale.

@@ -51,7 +51,7 @@ export default function Hero() {
           },
           {
             text: "le digital ",
-            className: "text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.18)]",
+            className: "shine-text [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]",
             break: true,
           },
           {

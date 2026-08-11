@@ -60,7 +60,6 @@ export default function Navbar() {
         <a href="/" className="group flex items-center gap-3">
           <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.03] border border-white/10 p-1.5 shadow-[0_0_25px_rgba(255,100,0,0.15)] transition-all duration-500 group-hover:scale-110 group-hover:border-white/25 group-hover:bg-white/5">
             <img src="/images/logo_novatech.webp" alt="Logo Afrique NovaTech" className="h-full w-full object-contain" />
-            <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 ring-2 ring-[#050505] animate-pulse" />
           </div>
           <div className="leading-tight">
             <span className="block text-sm font-bold tracking-tight bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent group-hover:text-white transition-colors">Afrique</span>
