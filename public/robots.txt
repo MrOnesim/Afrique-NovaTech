@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://afriquedigital.com/sitemap.xml
+Sitemap: https://afrique-novatech.vercel.app/sitemap.xml

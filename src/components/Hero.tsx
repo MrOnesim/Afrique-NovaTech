@@ -1,7 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { stats } from "../data";
 import Typewriter from "./Typewriter";
-import HeroVisual from "./HeroVisual";
+import Globe from "./Globe";
 
 export default function Hero() {
   const mx = useMotionValue(0);
@@ -93,9 +93,9 @@ export default function Hero() {
         </a>
       </motion.div>
 
-      {/* 3D floating sphere */}
+      {/* Globe 3D lumineux — localisation Afrique NovaTech (Cotonou) */}
       <div className="mt-10 hidden lg:block">
-        <HeroVisual rotateX={rx} rotateY={ry} parallaxX={px} parallaxY={py} />
+        <Globe rotateX={rx} rotateY={ry} parallaxX={px} parallaxY={py} />
       </div>
 
       {/* stats */}
