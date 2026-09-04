@@ -48,8 +48,11 @@ function TeamAvatar({ initials, role }: { initials: string; role: string }) {
   }
 
   return (
-    <div className={`relative mx-auto flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br ${gradient} border border-white/10 transition-all duration-500 ${borderGlow} group-hover:scale-105 group-hover:border-white/20`}>
-      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${gradient} blur-md opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
+    <div className="relative mx-auto flex h-28 w-28 items-center justify-center">
+      <div className="absolute inset-0 rounded-full border border-dashed border-white/15 animate-spin-slow" />
+      <div className="absolute -inset-2 rounded-full border border-white/[0.06]" />
+      <div className={`relative flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br ${gradient} border border-white/10 transition-all duration-500 ${borderGlow} group-hover:scale-105 group-hover:border-white/20`}>
+        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${gradient} blur-md opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
       
       {/* Icon & Initials */}
       <div className={`relative flex flex-col items-center justify-center ${iconColor} transition-all duration-500`}>
@@ -62,6 +65,7 @@ function TeamAvatar({ initials, role }: { initials: string; role: string }) {
       <div className="absolute top-1.5 right-1.5 h-1.5 w-1.5 border-t border-r border-white/20" />
       <div className="absolute bottom-1.5 left-1.5 h-1.5 w-1.5 border-b border-l border-white/20" />
       <div className="absolute bottom-1.5 right-1.5 h-1.5 w-1.5 border-b border-r border-white/20" />
+      </div>
     </div>
   );
 }

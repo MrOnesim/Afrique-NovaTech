@@ -49,7 +49,7 @@ export default function Pricing() {
             className={cn(
               "relative flex flex-col rounded-3xl p-8 transition-all duration-300",
               p.highlight
-                ? "bg-white text-black shadow-[0_0_80px_-10px_rgba(255,255,255,0.3)] lg:-translate-y-5"
+                ? "bg-white text-black shadow-[0_0_80px_-10px_rgba(255,255,255,0.4),0_30px_90px_-40px_rgba(0,0,0,0.8)] ring-1 ring-white/40 lg:-translate-y-5"
                 : "glow-card border border-white/10 bg-white/[0.04] text-white backdrop-blur-xl hover:bg-white/[0.06]"
             )}
           >

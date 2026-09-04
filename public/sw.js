@@ -1,4 +1,4 @@
-const CACHE = "afrique-novatech-v1";
+const CACHE = "afrique-novatech-v2";
 const PRECACHE = ["/", "/index.html", "/manifest.webmanifest", "/favicon.svg"];
 
 self.addEventListener("install", (e) => {
