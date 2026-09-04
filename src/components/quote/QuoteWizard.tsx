@@ -111,9 +111,9 @@ export default function QuoteWizard() {
             <span>· devis référence</span>
           </div>
           {emailSent ? (
-            <p role="status" aria-live="polite" className="mt-3 text-xs text-emerald-400">
-              ✓ Votre devis a été transmis à notre équipe par email.
-            </p>
+          <p role="status" aria-live="polite" className="mt-3 inline-flex items-center gap-1.5 text-xs text-emerald-400">
+            <FaCheck className="h-3 w-3" /> Votre devis a été transmis à notre équipe par email.
+          </p>
           ) : isEmailJsConfigured() ? (
             <p role="status" aria-live="polite" className="mt-3 text-xs text-amber-400/80">
               La demande est enregistrée, mais l'envoi email n'a pas abouti. Contactez-nous

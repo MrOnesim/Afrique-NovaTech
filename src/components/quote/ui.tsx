@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { cn } from "../../utils/cn";
 import { formatFCFA } from "../../utils/quote";
 import { FaCheck, FaRegCircle, FaPlus, FaMinus, FaCircleCheck } from "react-icons/fa6";
+import { QuoteIcon } from "./quote-icons";
 
 /** Carte cliquable (radio) pour les choix — Type de projet, design, etc. */
 export function OptionCard({
@@ -38,7 +39,7 @@ export function OptionCard({
       >
         {selected ? <FaCheck className="h-2.5 w-2.5" /> : <FaRegCircle className="h-3 w-3" />}
       </span>
-      {icon && <span className="mt-0.5 text-xl leading-none">{icon}</span>}
+      {icon && <QuoteIcon code={icon} />}
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-semibold text-white">{title}</span>
         {desc && <span className="mt-0.5 block text-xs text-white/50">{desc}</span>}
@@ -89,7 +90,7 @@ export function CheckRow({
       >
         <FaCheck className="h-2.5 w-2.5" />
       </span>
-      {icon && <span className="mt-0.5 text-lg leading-none">{icon}</span>}
+      {icon && <QuoteIcon code={icon} />}
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-semibold text-white">{title}</span>
         {desc && <span className="mt-0.5 block text-xs text-white/50">{desc}</span>}
