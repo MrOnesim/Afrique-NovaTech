@@ -175,7 +175,7 @@ export default function Pricing() {
         transition={{ duration: 0.6, delay: 0.3 }}
         className="mt-14 rounded-3xl border border-white/10 bg-white/[0.03] px-8 py-8 backdrop-blur-xl"
       >
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[
             {
               icon: "💳",
@@ -191,6 +191,11 @@ export default function Pricing() {
               icon: "🔒",
               title: "Prix garantis",
               desc: "Le prix convenu dans le devis est fixe. Aucune surprise, aucune facturation cachée. Transparence totale du début à la fin.",
+            },
+            {
+              icon: "🌐",
+              title: "Domaine à prix coûtant",
+              desc: "Le nom de domaine est inclus la première année, puis renouvelé à prix coûtant (≈ 15 000 FCFA / an).",
             },
           ].map((item) => (
             <div key={item.title} className="flex items-start gap-4">

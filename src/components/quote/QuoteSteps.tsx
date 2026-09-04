@@ -211,6 +211,7 @@ export function StepHosting({
           onClick={() => onChange({ domain: !state.domain })}
           icon="🌐"
           title="Réservation du nom de domaine (1 an)"
+          desc="Renouvellement ensuite à prix coûtant (≈ 15 000 FCFA / an)."
           right={formatFCFA(15_000)}
         />
       </StepSection>
