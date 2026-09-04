@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import BackToTop from "./BackToTop";
 import CookieConsent from "./CookieConsent";
+import FloatingWhatsApp from "./FloatingWhatsApp";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -21,6 +22,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <main id="contenu" className="relative">{children}</main>
       <Footer />
       <BackToTop />
+      <FloatingWhatsApp />
       <CookieConsent />
     </div>
   );

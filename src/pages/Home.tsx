@@ -5,6 +5,7 @@ import Process from "../components/Process";
 import Portfolio from "../components/Portfolio";
 import Team from "../components/Team";
 import Testimonials from "../components/Testimonials";
+import Showreel from "../components/Showreel";
 import CTA from "../components/CTA";
 import Pricing from "../components/Pricing";
 import FAQ from "../components/FAQ";
@@ -26,6 +27,7 @@ export default function Home() {
       <Portfolio />
       <Team />
       <Testimonials />
+      <Showreel />
       <CTA />
       <Pricing />
       <FAQ />

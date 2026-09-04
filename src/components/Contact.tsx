@@ -4,6 +4,7 @@ import emailjs from "@emailjs/browser";
 import Field from "./Field";
 import Reveal from "./Reveal";
 import { isEmailJsConfigured } from "../utils/leads";
+import { FaEnvelope, FaPhone, FaLocationDot, FaBolt } from "react-icons/fa6";
 
 const FIELD_CLASS =
   "w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white outline-none ring-1 ring-white/10 transition-all placeholder:text-white/30 focus:ring-white/30";
@@ -103,12 +104,14 @@ export default function Contact() {
         className="relative overflow-hidden rounded-[2.5rem] border border-white/[0.12] bg-white/[0.06] p-8 backdrop-blur-2xl sm:p-14"
       >
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/10 blur-[100px]" />
+        <div className="absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-cyan-400/10 blur-[90px]" />
         <div className="relative grid gap-12 lg:grid-cols-2">
           <div>
-            <span className="mb-4 inline-block rounded-full bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-white/60">
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100/70">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-300" />
               Contact
             </span>
-            <h2 className="bg-gradient-to-b from-white to-neutral-500 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl">
+            <h2 className="hero-gradient-text text-4xl font-black tracking-tight sm:text-5xl">
               Donnons vie à<br />votre projet
             </h2>
             <p className="mt-5 max-w-md text-white/55">
@@ -118,20 +121,25 @@ export default function Contact() {
 
             <div className="mt-10 space-y-4">
               {[
-                { icon: "✉️", label: "Email", value: "gracaonesim@gmail.com" },
-                { icon: "📞", label: "Téléphone", value: "+229 01 41 96 92 08" },
-                { icon: "📍", label: "Bureaux", value: "Cotonou, Bénin" },
+                { Icon: FaEnvelope, label: "Email", value: "gracaonesim@gmail.com", href: "mailto:gracaonesim@gmail.com" },
+                { Icon: FaPhone, label: "Téléphone", value: "+229 01 41 96 92 08", href: "tel:+2290141969208" },
+                { Icon: FaLocationDot, label: "Bureaux", value: "Cotonou, Bénin", href: "#" },
               ].map((c) => (
-                <div key={c.label} className="flex items-center gap-4">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-lg ring-1 ring-white/10">
-                    {c.icon}
+                <a key={c.label} href={c.href} className="group flex items-center gap-4 transition-transform hover:translate-x-1">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-cyan-100 ring-1 ring-white/10 transition-all group-hover:bg-cyan-400/10 group-hover:ring-cyan-200/30">
+                    <c.Icon />
                   </span>
                   <div>
                     <div className="text-xs uppercase tracking-wider text-white/40">{c.label}</div>
-                    <div className="font-medium">{c.value}</div>
+                    <div className="font-medium text-white/85">{c.value}</div>
                   </div>
-                </div>
+                </a>
               ))}
+            </div>
+
+            <div className="mt-8 flex items-center gap-3 rounded-2xl border border-emerald-300/10 bg-emerald-400/[0.06] px-4 py-3 text-xs text-emerald-100/70 backdrop-blur-xl">
+              <FaBolt className="h-3.5 w-3.5 text-emerald-300" />
+              Disponible pour de nouveaux projets — réponse sous 24h.
             </div>
           </div>
 

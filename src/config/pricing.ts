@@ -26,7 +26,7 @@ export const PROJECT_TYPES = [
     label: "Landing page",
     icon: "🚀",
     desc: "Page unique optimisée pour convertir vos visiteurs en clients.",
-    price: { min: 150_000, max: 250_000 },
+    price: { min: 180_000, max: 280_000 },
     weeks: { min: 1, max: 2 },
   },
   {
@@ -34,7 +34,7 @@ export const PROJECT_TYPES = [
     label: "Site vitrine",
     icon: "🌐",
     desc: "Site institutionnel présentant vos activités, services et contacts.",
-    price: { min: 300_000, max: 500_000 },
+    price: { min: 350_000, max: 600_000 },
     weeks: { min: 2, max: 3 },
   },
   {
@@ -42,7 +42,7 @@ export const PROJECT_TYPES = [
     label: "Refonte de site existant",
     icon: "🔄",
     desc: "Modernisation complète de votre site actuel : design, perf, SEO.",
-    price: { min: 200_000, max: 350_000 },
+    price: { min: 250_000, max: 450_000 },
     weeks: { min: 1, max: 3 },
   },
   {
@@ -50,7 +50,7 @@ export const PROJECT_TYPES = [
     label: "Site e-commerce",
     icon: "🛒",
     desc: "Boutique en ligne complète avec catalogue, panier et paiement.",
-    price: { min: 700_000, max: 1_200_000 },
+    price: { min: 1_000_000, max: 1_800_000 },
     weeks: { min: 3, max: 6 },
   },
   {
@@ -58,7 +58,7 @@ export const PROJECT_TYPES = [
     label: "Application web",
     icon: "⚙️",
     desc: "Plateforme web métier : SaaS, dashboard, back-office, outil en ligne.",
-    price: { min: 1_000_000, max: 2_000_000 },
+    price: { min: 1_800_000, max: 3_000_000 },
     weeks: { min: 4, max: 8 },
   },
   {
@@ -66,7 +66,7 @@ export const PROJECT_TYPES = [
     label: "Application mobile",
     icon: "📱",
     desc: "Application iOS / Android (React Native) connectée à votre service.",
-    price: { min: 2_000_000, max: 4_000_000 },
+    price: { min: 2_600_000, max: 5_000_000 },
     weeks: { min: 6, max: 12 },
   },
 ];
@@ -198,8 +198,11 @@ export const DISCOUNT_RULES = [
   },
 ];
 
-/** Plafond des remises cumulées. */
-export const MAX_DISCOUNT = 0.25;
+/** Plafond des remises cumulées (protège la marge tout en récompensant les gros projets). */
+export const MAX_DISCOUNT = 0.15;
+
+/** Mention affichée pour le renouvellement du nom de domaine. */
+export const DOMAIN_NOTE = "Renouvellement ensuite à prix coûtant (≈ 15 000 FCFA / an).";
 
 /** Validité de l'offre en jours (affichée sur le devis PDF). */
 export const QUOTE_VALIDITY_DAYS = 30;
