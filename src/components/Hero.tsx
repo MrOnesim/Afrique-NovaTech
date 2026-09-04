@@ -2,6 +2,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { stats } from "../data";
 import Typewriter from "./Typewriter";
 import Globe from "./Globe";
+import CountUp from "./CountUp";
 import { FaPlay, FaArrowDown, FaRocket } from "react-icons/fa6";
 
 export default function Hero() {
@@ -148,7 +149,7 @@ export default function Hero() {
             {stats.map((s) => (
               <div key={s.label} className="glass-panel rounded-2xl p-4 text-center backdrop-blur-xl transition-transform duration-300 hover:scale-[1.03]">
                 <div className="bg-gradient-to-b from-white to-neutral-400 bg-clip-text text-2xl font-black text-transparent sm:text-3xl">
-                  {s.value}
+                  <CountUp value={s.value} />
                 </div>
                 <div className="mt-1 text-[10px] uppercase tracking-wider text-white/45">{s.label}</div>
               </div>

@@ -20,6 +20,21 @@ import {
   StepSeo,
 } from "./QuoteSteps";
 import { TextField } from "./ui";
+import {
+  FaRocket,
+  FaExpand,
+  FaListCheck,
+  FaMagnifyingGlassChart,
+  FaServer,
+  FaClock,
+  FaUserPen,
+  FaArrowRight,
+  FaArrowLeft,
+  FaCheck,
+  FaPaperPlane,
+  FaBolt,
+  FaShieldHalved,
+} from "react-icons/fa6";
 
 const STEP_TITLES = [
   "Type de projet",
@@ -30,6 +45,8 @@ const STEP_TITLES = [
   "Délai",
   "Coordonnées",
 ];
+
+const STEP_ICONS = [FaRocket, FaExpand, FaListCheck, FaMagnifyingGlassChart, FaServer, FaClock, FaUserPen];
 
 const TOTAL_STEPS = STEP_TITLES.length;
 
@@ -70,38 +87,47 @@ export default function QuoteWizard() {
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="mx-auto max-w-xl rounded-[2.5rem] border border-white/[0.12] bg-white/[0.06] p-8 text-center backdrop-blur-2xl sm:p-12"
+        className="relative mx-auto max-w-xl overflow-hidden rounded-[2.5rem] border border-white/12 bg-gradient-to-b from-white/[0.08] to-white/[0.02] p-8 text-center backdrop-blur-2xl sm:p-12"
       >
-        <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-white text-3xl text-black">
-          ✓
-        </div>
-        <h2 className="text-2xl font-black text-white">Demande envoyée !</h2>
-        <p className="mt-3 text-sm leading-relaxed text-white/55">
-          Merci {state.name.split(" ")[0] || ""}. Votre demande de devis a bien été enregistrée.
-          Notre équipe vous recontacte sous 24h au{" "}
-          <strong className="text-white">{state.phone}</strong> ou par email.
-        </p>
-        <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs text-white/60">
-          <span className="font-semibold text-white">{quoteNumber}</span>
-          <span>· devis référence</span>
-        </div>
-        {emailSent ? (
-          <p role="status" aria-live="polite" className="mt-3 text-xs text-emerald-400">
-            ✓ Votre devis a été transmis à notre équipe par email.
+        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-emerald-400/10 blur-[80px]" />
+        <div className="relative">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 220, damping: 16 }}
+            className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-emerald-300 to-cyan-300 text-3xl text-black shadow-[0_0_50px_-10px_rgba(16,185,129,0.8)]"
+          >
+            <FaCheck />
+          </motion.div>
+          <h2 className="text-2xl font-black text-white">Demande envoyée !</h2>
+          <p className="mt-3 text-sm leading-relaxed text-white/55">
+            Merci {state.name.split(" ")[0] || ""}. Votre demande de devis a bien été enregistrée.
+            Notre équipe vous recontacte sous 24h au{" "}
+            <strong className="text-white">{state.phone}</strong> ou par email.
           </p>
-        ) : isEmailJsConfigured() ? (
-          <p role="status" aria-live="polite" className="mt-3 text-xs text-amber-400/80">
-            La demande est enregistrée, mais l'envoi email n'a pas abouti. Contactez-nous
-            directement via WhatsApp.
-          </p>
-        ) : (
-          <p role="status" aria-live="polite" className="mt-3 text-xs text-white/40">
-            Votre demande est bien enregistrée. Téléchargez le PDF ci-dessous pour la garder en
-            référence.
-          </p>
-        )}
-        <div className="mt-6">
-          <QuoteSummary state={state} result={result} quoteNumber={quoteNumber} />
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs text-white/60">
+            <FontBolt />
+            <span className="font-semibold text-white">{quoteNumber}</span>
+            <span>· devis référence</span>
+          </div>
+          {emailSent ? (
+            <p role="status" aria-live="polite" className="mt-3 text-xs text-emerald-400">
+              ✓ Votre devis a été transmis à notre équipe par email.
+            </p>
+          ) : isEmailJsConfigured() ? (
+            <p role="status" aria-live="polite" className="mt-3 text-xs text-amber-400/80">
+              La demande est enregistrée, mais l'envoi email n'a pas abouti. Contactez-nous
+              directement via WhatsApp.
+            </p>
+          ) : (
+            <p role="status" aria-live="polite" className="mt-3 text-xs text-white/40">
+              Votre demande est bien enregistrée. Téléchargez le PDF ci-dessous pour la garder en
+              référence.
+            </p>
+          )}
+          <div className="mt-6">
+            <QuoteSummary state={state} result={result} quoteNumber={quoteNumber} />
+          </div>
         </div>
       </motion.div>
     );
@@ -109,17 +135,55 @@ export default function QuoteWizard() {
 
   return (
     <div className="relative">
-      {/* Barre de progression */}
-      <div className="mb-8">
-        <div className="mb-3 flex items-center justify-between text-xs text-white/50">
-          <span className="font-semibold text-white">
+      {/* Stepper */}
+      <div className="mb-8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl sm:p-5">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 text-xs text-white/50">
+          <span className="inline-flex items-center gap-2 font-semibold text-white">
+            <FaBolt className="h-3.5 w-3.5 text-cyan-200" />
             Étape {step + 1} / {TOTAL_STEPS} — {STEP_TITLES[step]}
           </span>
-          <span>~2 min</span>
+          <span className="inline-flex items-center gap-1.5 text-emerald-300/80">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" /> ~2 min
+          </span>
         </div>
+
+        {/* step dots */}
+        <div className="mb-4 hidden items-center justify-between gap-1 sm:flex">
+          {STEP_TITLES.map((title, i) => {
+            const Icon = STEP_ICONS[i];
+            const done = i < step;
+            const current = i === step;
+            return (
+              <div key={title} className="flex flex-1 items-center gap-1">
+                <div
+                  className={cn(
+                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border text-[11px] transition-all duration-300",
+                    done && "border-emerald-300/40 bg-emerald-400/10 text-emerald-300",
+                    current && "border-cyan-200/50 bg-cyan-400/10 text-cyan-100 shadow-[0_0_25px_-6px_rgba(125,227,255,0.55)]",
+                    !done && !current && "border-white/10 bg-white/[0.03] text-white/30",
+                  )}
+                >
+                  {done ? <FaCheck className="h-3 w-3" /> : <Icon className="h-3.5 w-3.5" />}
+                </div>
+                {i < TOTAL_STEPS - 1 && (
+                  <div className="relative h-0.5 flex-1 overflow-hidden rounded bg-white/8">
+                    <motion.div
+                      className={cn("absolute inset-y-0 left-0", done ? "bg-emerald-300/60" : "bg-white/5")}
+                      initial={false}
+                      animate={{ width: done ? "100%" : "0%" }}
+                      transition={{ duration: 0.4 }}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* progress bar */}
         <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
           <motion.div
-            className="h-full rounded-full bg-white"
+            className="h-full rounded-full bg-gradient-to-r from-cyan-300 via-white to-orange-300 shadow-[0_0_15px_rgba(125,227,255,0.5)]"
             initial={false}
             animate={{ width: `${((step + 1) / TOTAL_STEPS) * 100}%` }}
             transition={{ duration: 0.4, ease: "easeOut" }}
@@ -130,7 +194,10 @@ export default function QuoteWizard() {
       <div className="grid gap-8 lg:grid-cols-[1fr_340px]">
         {/* Contenu de l'étape */}
         <div>
-          <div className="rounded-[2rem] border border-white/[0.12] bg-white/[0.06] p-6 backdrop-blur-2xl sm:p-8">
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-6 backdrop-blur-2xl sm:p-8">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent" />
+            <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-cyan-400/10 blur-[80px]" />
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={step}
@@ -138,6 +205,7 @@ export default function QuoteWizard() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -24 }}
                 transition={{ duration: 0.25 }}
+                className="relative"
               >
                 {step === 0 && <StepProjectType state={state} onChange={patch} />}
                 {step === 1 && <StepScope state={state} onChange={patch} />}
@@ -148,7 +216,8 @@ export default function QuoteWizard() {
                 {step === 6 && (
                   <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                     <div>
-                      <h3 className="text-sm font-semibold uppercase tracking-wider text-white/50">
+                      <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-white/50">
+                        <FaUserPen className="h-3.5 w-3.5 text-cyan-200" />
                         Vos coordonnées
                       </h3>
                       <p className="mt-1 text-xs text-white/40">
@@ -189,7 +258,8 @@ export default function QuoteWizard() {
                         required={false}
                       />
                     </div>
-                    <p className="text-[11px] leading-relaxed text-white/35">
+                    <p className="inline-flex items-start gap-2 rounded-xl border border-white/10 bg-white/[0.03] p-3 text-[11px] leading-relaxed text-white/40">
+                      <FaShieldHalved className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-300/70" />
                       En envoyant, vous acceptez d'être recontacté par notre équipe. Vos données ne
                       sont jamais partagées avec des tiers.
                     </p>
@@ -199,32 +269,34 @@ export default function QuoteWizard() {
             </AnimatePresence>
 
             {/* Navigation */}
-            <div className="mt-8 flex items-center justify-between gap-3">
+            <div className="mt-8 flex items-center justify-between gap-3 border-t border-white/10 pt-6">
               <button
                 type="button"
                 onClick={() => setStep((s) => Math.max(0, s - 1))}
                 disabled={step === 0}
-                className="rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white/70 transition-colors hover:bg-white/10 disabled:opacity-30"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white/70 transition-colors hover:bg-white/10 disabled:opacity-30"
               >
-                ← Retour
+                <FaArrowLeft className="h-3.5 w-3.5" /> Retour
               </button>
 
               {canGoNext ? (
                 <button
                   type="button"
                   onClick={() => setStep((s) => Math.min(TOTAL_STEPS - 1, s + 1))}
-                  className="rounded-xl bg-white px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-105"
+                  className="group inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-black shadow-[0_0_35px_-10px_rgba(255,255,255,0.4)] transition-all hover:scale-[1.03] hover:shadow-[0_0_45px_-8px_rgba(125,227,255,0.55)]"
                 >
-                  Continuer →
+                  Continuer
+                  <FaArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={() => (document.querySelector("form") as HTMLFormElement)?.requestSubmit()}
                   disabled={sending}
-                  className="rounded-xl bg-white px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="group inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-black shadow-[0_0_35px_-10px_rgba(255,255,255,0.4)] transition-all hover:scale-[1.03] hover:shadow-[0_0_45px_-8px_rgba(16,185,129,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {sending ? "Envoi en cours…" : "Recevoir mon devis ✓"}
+                  {sending ? "Envoi en cours…" : "Recevoir mon devis"}
+                  {sending ? <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-black/30 border-t-black" /> : <FaPaperPlane className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5" />}
                 </button>
               )}
             </div>
@@ -234,11 +306,12 @@ export default function QuoteWizard() {
         {/* Prix temps réel — sticky desktop */}
         <aside className="hidden lg:block">
           <div className="sticky top-24 space-y-3">
-            <div className="rounded-2xl border border-white/[0.12] bg-white/[0.06] p-6 backdrop-blur-2xl">
+            <div className="relative overflow-hidden rounded-2xl border border-white/12 bg-gradient-to-b from-white/[0.08] to-white/[0.02] p-6 backdrop-blur-2xl">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-cyan-400/10 blur-2xl" />
               <div className="text-[10px] font-semibold uppercase tracking-wider text-white/40">
                 Estimation temps réel
               </div>
-              <div className="mt-2 text-2xl font-black leading-tight text-white">
+              <div className="mt-2 bg-gradient-to-r from-white to-cyan-100/80 bg-clip-text text-2xl font-black leading-tight text-transparent">
                 {formatRange(result.total.min, result.total.max)}
               </div>
               <div className="mt-1 text-sm text-white/50">
@@ -264,22 +337,20 @@ export default function QuoteWizard() {
               </div>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-center text-xs text-white/40">
-              💡 Prix mis à jour à chaque clic
+              <FaBolt className="mx-auto mb-1 h-3.5 w-3.5 text-cyan-200/60" />
+              Prix mis à jour à chaque clic
             </div>
           </div>
         </aside>
       </div>
 
       {/* Prix temps réel — sticky mobile */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0a0a0a]/90 p-3 backdrop-blur-2xl lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0a0a0a]/92 p-3 shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-2xl lg:hidden">
         <div className="mx-auto flex max-w-md items-center justify-between gap-3">
           <div>
-            <div className="text-[9px] uppercase tracking-wider text-white/40">
-              Estimation
-            </div>
-            <div className={cn("text-sm font-black text-white")}>
-              {formatRange(result.total.min, result.total.max)}
-            </div>
+            <div className="text-[9px] uppercase tracking-wider text-white/40">Estimation</div>
+            <div className="text-sm font-black text-white">{formatRange(result.total.min, result.total.max)}</div>
+            <div className="text-[10px] text-white/40">{formatRangeEUR(result.total.min, result.total.max)}</div>
           </div>
           <button
             type="button"
@@ -289,12 +360,19 @@ export default function QuoteWizard() {
                 : setStep((s) => Math.min(TOTAL_STEPS - 1, s + 1))
             }
             disabled={sending}
-            className="rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-black disabled:opacity-60"
+            className="group inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-black disabled:opacity-60"
           >
-            {isLast ? (sending ? "Envoi…" : "Finaliser ✓") : "Continuer"}
+            {isLast ? (sending ? "Envoi…" : "Finaliser") : "Continuer"}
+            <FaArrowRight className="h-3.5 w-3.5" />
           </button>
         </div>
       </div>
     </div>
+  );
+}
+
+function FontBolt() {
+  return (
+    <FaBolt className="h-3 w-3 text-cyan-200/70" />
   );
 }

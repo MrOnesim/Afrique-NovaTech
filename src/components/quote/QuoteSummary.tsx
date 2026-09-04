@@ -1,4 +1,4 @@
-﻿import { AGENCY, PAYMENT_TERMS, QUOTE_VALIDITY_DAYS } from "../../config/pricing";
+import { AGENCY, PAYMENT_TERMS, QUOTE_VALIDITY_DAYS } from "../../config/pricing";
 import {
   buildMailtoLink,
   buildWhatsAppLink,
@@ -8,6 +8,16 @@ import {
   type QuoteResult,
   type QuoteState,
 } from "../../utils/quote";
+import {
+  FaWhatsapp,
+  FaEnvelope,
+  FaFileArrowDown,
+  FaCheck,
+  FaReceipt,
+  FaClock,
+  FaCalendarCheck,
+  FaCreditCard,
+} from "react-icons/fa6";
 
 export default function QuoteSummary({
   state,
@@ -27,118 +37,129 @@ export default function QuoteSummary({
   };
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-      <div className="flex items-center justify-between">
-        <h3 className="text-base font-bold text-white">Récapitulatif du devis</h3>
-        <button
-          type="button"
-          onClick={handleDownloadPdf}
-          className="rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-black transition-transform hover:scale-105"
-        >
-          ⬇ Télécharger PDF
-        </button>
-      </div>
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+      <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-emerald-400/8 blur-2xl" />
 
-      {/* Lignes du devis */}
-      <div className="mt-5 space-y-2">
-        {result.lines.map((l, i) => (
-          <div key={i} className="flex items-start justify-between gap-3 text-sm">
-            <div className="min-w-0">
-              <span className="text-white/85">{l.label}</span>
-              {l.detail && (
-                <span className="block text-xs text-white/40">{l.detail}</span>
-              )}
+      <div className="relative">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h3 className="inline-flex items-center gap-2 text-base font-bold text-white">
+            <FaReceipt className="h-4 w-4 text-cyan-200" />
+            Récapitulatif du devis
+          </h3>
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-black transition-all hover:scale-105 hover:shadow-[0_0_25px_-6px_rgba(125,227,255,0.6)]"
+          >
+            <FaFileArrowDown className="h-3 w-3" /> PDF
+          </button>
+        </div>
+
+        {/* Lignes du devis */}
+        <div className="mt-5 space-y-2">
+          {result.lines.map((l, i) => (
+            <div key={i} className="flex items-start justify-between gap-3 text-sm">
+              <div className="min-w-0">
+                <span className="text-white/85">{l.label}</span>
+                {l.detail && (
+                  <span className="block text-xs text-white/40">{l.detail}</span>
+                )}
+              </div>
+              <span className="shrink-0 font-semibold text-white/70">{formatFCFA(l.min)}</span>
             </div>
-            <span className="shrink-0 text-white/70">{formatFCFA(l.min)}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="my-4 border-t border-white/10" />
-
-      {/* Remises */}
-      {result.discountPct > 0 && (
-        <div className="mb-4 rounded-xl bg-emerald-500/10 p-3 text-sm ring-1 ring-emerald-500/20">
-          <span className="font-semibold text-emerald-400">
-            Remise {Math.round(result.discountPct * 100)}% appliquée
-          </span>
-          <span className="mt-0.5 block text-xs text-emerald-300/70">
-            {result.discountLabels.join(" · ")}
-          </span>
-        </div>
-      )}
-
-      {/* Total */}
-      <div className="rounded-xl bg-white p-4 text-black">
-        <div className="text-[10px] font-semibold uppercase tracking-wider text-black/50">
-          Estimation totale
-        </div>
-        <div className="mt-1 text-xl font-black leading-tight">
-          {formatRange(result.total.min, result.total.max)}
-        </div>
-        <div className="mt-0.5 text-sm text-black/50">
-          {formatRangeEUR(result.total.min, result.total.max)}
-        </div>
-      </div>
-
-      {/* Délai + validité */}
-      <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-        <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
-          <div className="text-xs text-white/40">Délai estimé</div>
-          <div className="mt-0.5 font-semibold text-white">
-            {result.delivery.min}–{result.delivery.max} semaines
-          </div>
-        </div>
-        <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
-          <div className="text-xs text-white/40">Offre valable</div>
-          <div className="mt-0.5 font-semibold text-white">
-            {validity.toLocaleDateString("fr-FR")}
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-3 text-xs">
-        <div className="text-[10px] font-semibold uppercase tracking-wider text-white/40">
-          Modalités de paiement
-        </div>
-        <div className="mt-1 space-y-0.5 text-white/70">
-          {PAYMENT_TERMS.map((t) => (
-            <div key={t}>• {t}</div>
           ))}
         </div>
-      </div>
 
-      {/* Actions */}
-      <div className="mt-5 grid gap-2 sm:grid-cols-2">
-        <a
-          href={buildWhatsAppLink(state, result)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.02]"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.3a16 16 0 0 0 3.8 3.1 16 16 0 0 0 1.7.7c.7.3 1.3.2 1.7.1.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1l-.5-.5Z" />
-          </svg>
-          Discuter sur WhatsApp
-        </a>
-        <a
-          href={buildMailtoLink(state, result)}
-          className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-        >
-          ✉️ Envoyer par email
-        </a>
-        <button
-          type="button"
-          onClick={handleDownloadPdf}
-          className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10 sm:col-span-2"
-        >
-          ⬇ Télécharger le devis (PDF)
-        </button>
-      </div>
+        <div className="my-4 border-t border-white/10" />
 
-      <p className="mt-4 text-center text-[10px] leading-relaxed text-white/30">
-        Devis estimatif, non contractuel. {AGENCY.name} · {AGENCY.email}
-      </p>
+        {/* Remises */}
+        {result.discountPct > 0 && (
+          <div className="mb-4 rounded-xl bg-emerald-500/10 p-3 text-sm ring-1 ring-emerald-500/20">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-400">
+              <FaCheck className="h-3 w-3" /> Remise {Math.round(result.discountPct * 100)}% appliquée
+            </span>
+            <span className="mt-0.5 block text-xs text-emerald-300/70">
+              {result.discountLabels.join(" · ")}
+            </span>
+          </div>
+        )}
+
+        {/* Total */}
+        <div className="relative overflow-hidden rounded-xl bg-white p-4 text-black">
+          <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-cyan-400/20 blur-2xl" />
+          <div className="relative">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-black/50">
+              Estimation totale
+            </div>
+            <div className="mt-1 text-xl font-black leading-tight">
+              {formatRange(result.total.min, result.total.max)}
+            </div>
+            <div className="mt-0.5 text-sm text-black/50">
+              {formatRangeEUR(result.total.min, result.total.max)}
+            </div>
+          </div>
+        </div>
+
+        {/* Délai + validité */}
+        <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+          <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
+            <div className="flex items-center gap-1.5 text-xs text-white/40">
+              <FaClock className="h-3 w-3" /> Délai estimé
+            </div>
+            <div className="mt-0.5 font-semibold text-white">
+              {result.delivery.min}–{result.delivery.max} semaines
+            </div>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
+            <div className="flex items-center gap-1.5 text-xs text-white/40">
+              <FaCalendarCheck className="h-3 w-3" /> Offre valable
+            </div>
+            <div className="mt-0.5 font-semibold text-white">
+              {validity.toLocaleDateString("fr-FR")}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-3 text-xs">
+          <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-white/40">
+            <FaCreditCard className="h-3 w-3" /> Modalités de paiement
+          </div>
+          <div className="mt-1 space-y-0.5 text-white/70">
+            {PAYMENT_TERMS.map((t) => (
+              <div key={t}>• {t}</div>
+            ))}
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="mt-5 grid gap-2 sm:grid-cols-2">
+          <a
+            href={buildWhatsAppLink(state, result)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-3 text-sm font-bold text-white transition-all hover:scale-[1.02] hover:bg-emerald-400 hover:shadow-[0_0_35px_-8px_rgba(16,185,129,0.7)]"
+          >
+            <FaWhatsapp className="h-4 w-4" /> WhatsApp
+          </a>
+          <a
+            href={buildMailtoLink(state, result)}
+            className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+          >
+            <FaEnvelope className="h-3.5 w-3.5" /> Email
+          </a>
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10 sm:col-span-2"
+          >
+            <FaFileArrowDown className="h-3.5 w-3.5" /> Télécharger le devis (PDF)
+          </button>
+        </div>
+
+        <p className="mt-4 text-center text-[10px] leading-relaxed text-white/30">
+          Devis estimatif, non contractuel. {AGENCY.name} · {AGENCY.email}
+        </p>
+      </div>
     </div>
   );
 }
